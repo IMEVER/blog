@@ -1,0 +1,72 @@
+$def with(post, pre_id, ne_id, comments_count, comments)
+<div class="post">
+  <h1 class="title">$post.title</h1>
+  <p class="byline"><span class="author"><a href="/author/$post.usrid">$post.author</a></span><small> 发表于<span class="author"> $post.date</span></small>
+      $ tags = post.tag.split(';')
+      <small>Tagged with
+        $for tag in tags:
+          <a class="tags" href="/tag?key=$tag">$tag</a>&nbsp;
+      </small>
+  </p>
+  <div class="entry">
+    <p>$:post.content</p>
+  </div>
+</div>
+$if pre_id != 0 or ne_id != 0:
+  <div id="post-nav">
+    $if pre_id!=0:
+      <a class="post-nav-pre" href="/post?id=$pre_id">&lt;&lt;&nbsp;PrePost</a>
+    $if ne_id != 0:
+      <a class="post-nav-ne" href="/post?id=$ne_id">NextPost&nbsp;&gt;&gt;</a>
+  </div>
+<!-- 评论部分 -->
+<div id="comments">
+  <h3>$comments_count条评论</h3>
+  <div id="comments-list">
+    <ol>
+      $for comment in comments:
+        <li>
+          <div class="comment-box" id="comment_$comment.id">
+            <p class="comment-user">$comment.author</p>
+            <p class="comment-time">$comment.date</p>
+            <div>
+              <p class="comment-content">$comment.content</p>
+            </div>
+	    <div class="comment-action">
+	    	<span data-id="$comment.id" data-dir="inc">UP($comment.upnum)</span> | <span data-id="$comment.id" data-dir="dec">DOWN($comment.downnum)</span>
+            </div>
+          </div>
+        </li>
+    </ol>
+  </div>
+  <h3>我要评论</h3>
+  <form id="comment-form" action="/post/add-comment" method="POST">
+    <input type="hidden" name="post_id" value="$post.id" />
+    <table>
+      <tr>
+        <td><label for="name-input">Name:</label></td>
+        <td><input type="text" id="name-input" name="author">
+          <span id="name-error" class="error-msg unshown">请填写用户名</span>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="email-input">Email:</label></td>
+        <td><input type="text" id="email-input" name="email" />
+          <span id="email-error" class="error-msg unshown">请填写email</span>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="website-input">Website:</label></td>
+        <td><input type="text" id="website-input" name="website"></td>
+      </tr>
+      <tr>
+        <td><label for="comment-input">Comment:</label></td>
+        <td><textarea id="comment-input" rows="6" cols="30" name="content"></textarea>
+          <span id="comment-error" class="error-msg unshown">说点什么呗</span>
+        </td>
+      </tr>
+    </table>
+    <input id="comment-submit" type="submit" value="提交">
+  </form>
+</div>
+<script type="text/javascript" src="$config.static/scripts/comments.js"></script>

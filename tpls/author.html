@@ -1,0 +1,22 @@
+$def with(user,posts)
+$if len(user) > 0:
+  <p>User name: <b>$user.user</b></p>
+  <p>Adder : <span>$user.addr</span></p>
+  <p>Birth : <span>$user.birth</span></p>
+  <p>Desc: </p><blockquote>$user.desc</blockquote>
+  <p>
+     Article Count : <span>$len(posts)</span><br />
+     Article Lists :
+	<ul>
+		$for post in posts:
+			<li><a href="/post?id=$post.id">$post.title</a> 
+			$if post.tag:  
+				Tag:<a href="/tag?key=$post.tag">$post.tag</a> 
+				$post.date.date()</li>
+	</ul>
+  </p>
+
+
+$else:
+  <p>User with id equal 1 does not exist</p>
+

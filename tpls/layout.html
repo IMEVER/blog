@@ -1,0 +1,50 @@
+$def with(content)
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>$config.site_name | $config.description</title>
+    <meta name="keywords" content="" />
+    <meta name="author" content="$config.author" />
+    <meta name="description" content="$config.description" />
+    <link href="$config.static/styles/default.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css" />
+   <script type="text/javascript" src="http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+    <div id="header">
+      <h1><a href="/">$config.site_name</a></h1>
+        <div class="account">
+          $if session.uid:
+	   	<a href="/admin">Manage Page</a>
+		 <span>Hello, $session.user, <a href="/admin/logout">Logout</a></span>	
+	  $else:
+	    <a href="/admin/login">Login</a>
+        </div>
+    </div>
+    <div id="menu">
+	    <ul>
+		    <li><a href="/">Home</a></li>
+		    <li><a href="/about">About Me</a></li>
+	    </ul>
+    </div>
+    <div id="content">
+	    <div id="left">
+	      $:content
+      </div>
+	    <div id="right">
+		    <h2>ARCHIVES</h2>
+		    	<ul>
+			$for item in rList:
+			    <li><a href="post?id=$item['id']">$item['title']</a>
+        		</ul>
+       		 <h2>Administration</h2>
+
+	</div>
+    </div>
+    <div id="footer">
+	    <p>Copyright &copy; 2012 Designed by <a href="http://blog.imever.me/" class="link1">IMEVER</a></p>
+    </div>
+  </body>
+</html>
