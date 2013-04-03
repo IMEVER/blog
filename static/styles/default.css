@@ -59,11 +59,12 @@ a:hover {
 /** MENU */
 
 #menu {
-	width: 700px;
+	width: 980px;
 	height: 1.6em;
 	margin: 0px auto;
 	margin-top:60px;
 	border: 1px solid #000099;
+	border-radius:5px;
 }
 
 #menu ul {
@@ -92,25 +93,36 @@ a:hover {
 /** CONTENT */
 
 #content {
-	width: 700px;
+	width: 980px;
 	margin: 0 auto;
+	background-color:#fff;
 }
 
+#content:after{
+	content: " ";
+	display: block;
+	height: 0px;
+	clear: both;
+}
 #content h2 {
 	font-weight: normal;
 }
 
 #left {
 	float: left;
-	width: 480px;
+	width: 610px;
+	padding:10px 20px;
+	border-right:solid 1px #eee;
 }
 
 #left .post {
-  float: left;
-  width: 480px;
   /*border-bottom:1px dashed #000099;*/
 }
 
+.post h1{
+	color:#333;
+	font-weight:bold;
+}
 .byline {
   font-weight:normal;
   font-style:italic;
@@ -126,8 +138,6 @@ a:hover {
 }
 
 .entry {
-  float: left;
-  width: 480px;
 }
 .meta {
   width: 480px;
@@ -137,9 +147,7 @@ a:hover {
 }
 
 #post-nav {
-  float:left;
   padding-bottom:10px;
-  width:480px;
 }
 .post-nav-pre {
   float:left;  
@@ -151,19 +159,21 @@ a:hover {
 
 #right {
 	float: right;
-	width:200px;
+	width:290px;
+	margin-right:20px;
 }
 #right h2 {
-  font-weight:bold;
+	font-weight:bold;
+	background-color:#eee;
+	padding-left:10px;
 }
 
 /** FOOTER */
 
 #footer {
 	clear: both;
-	width: 680px;
+	width: 980px;
 	margin: 0px auto;
-	padding: 5px 10px;
 	border: 1px solid #000099;
 }
 
@@ -171,15 +181,14 @@ a:hover {
 	margin: 0px;
 	padding: 0px;
 	font-size: x-small;
+	padding: 5px 10px;
 }
 #comment-form{
   padding-bottom:0.5em;
 }
 #comments {
   display:block;
-  width:480px;
   padding-top:10px;
-  float:left;
 }
 .comment-box {
   padding-left:0.5em;
