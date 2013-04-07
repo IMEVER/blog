@@ -21,6 +21,7 @@ function validateComment(){
        isValidated = false;
      }else{
       $("#email-error").addClass("unshown");
+      //document.cookie = "email="+$("#email-input").val().trim();
      }
   }
   if($("#comment-input").val().trim() == ""){
@@ -50,7 +51,7 @@ function validateComment(){
 	$(".comment-action span[data-dir=inc]").each(function(i,item){
 		var num = parseInt(item.innerHTML.match(/\((\d+)\)/)[1]);
 		if(num > 5){
-			$(item).parents(".comment-box").get(0).style.backgroundColor = "#ffffcc";
+			$(item).parent().prev().get(0).style.backgroundColor = "#ffffcc";
 		}
 	});
 })(window,undefined)

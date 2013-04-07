@@ -25,6 +25,9 @@ create table comment
 	upnum int(11) default 0,
 	downnum int(11) default 0,
 	date datetime not null,
+	ipv4 int,
+	ipv6 binary(16),
+	useragent varchar(100),
 	primary key(id)
 )engine=innodb,charset=utf8;
 

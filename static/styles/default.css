@@ -29,7 +29,12 @@ a:hover {
 	text-decoration: underline;
 	color: #990000;
 }
-
+.clearfix:after{
+  content: " ";
+  display:block;
+  height:0px;
+  clear:both;
+}
 /** HEADER */
 
 #header {
@@ -63,8 +68,8 @@ a:hover {
 	height: 1.6em;
 	margin: 0px auto;
 	margin-top:60px;
-	border: 1px solid #000099;
-	border-radius:5px;
+	border: 1px solid #cccccc;
+	border-radius:2px;
 }
 
 #menu ul {
@@ -140,10 +145,6 @@ a:hover {
 .entry {
 }
 .meta {
-  width: 480px;
-  float: left;
-  height:auto;
-  line-height:0.3em;
 }
 
 #post-nav {
@@ -192,8 +193,18 @@ a:hover {
 }
 .comment-box {
   padding-left:0.5em;
+  padding-top:10px;
   margin-bottom:0.5em;
   border:1px dashed #999;
+}
+.comment-avatar{
+  float:left;
+}
+.comment-info{
+  margin-left:50px;
+}
+.comment-info > div{
+  padding:2px;
 }
 .comment-content{
   font-size:16px;
@@ -204,6 +215,7 @@ a:hover {
   font-size:14px;
   color:#284569;
   font-style:italic;
+  margin-top:0px;
 }
 .comment-time{
   font-size:10px;

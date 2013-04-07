@@ -6,7 +6,12 @@ import sys
 import md5
 import random
 import traceback
+import urllib, hashlib
+import socket
+import struct
 from config import settings
+
+
 
 T_ARTICLE = 'article'
 T_COMMENT = 'comment'
@@ -29,7 +34,24 @@ def recommendList():
 		posts.append(article)
 	return posts
 #print recommendList()
+
+def getAvatarUrl(email):
+	default = "http://www.imever.cn:8080/static/images/gravatar.png"
+	size = 40
+	
+	gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower()).hexdigest() + "?"
+	#gravatar_url += urllib.urlencode({'d':default,'s':str(size)})
+
+	gravatar_url += urllib.urlencode({'d':'mm', 's':str(size)})
+	return gravatar_url
+
 web.template.Template.globals['rList'] = recommendList()
+web.template.Template.globals['getAvatarUrl'] = getAvatarUrl
+
+def ip2long(ip):
+	return struct.unpack("!I",socket.inet_aton(ip))[0]
+def long2ip(ip):
+	return socket.inet_ntoa(struct.pack("!I",ip))
 
 #def article
 
@@ -104,7 +126,7 @@ class Post:
         ne_post_id = 0
       else:
         ne_post_id = ne_post[0].id
-      return render.post(post[0], pre_post_id, ne_post_id, len(comments), comments)
+      return render.post(post[0], pre_post_id, ne_post_id, len(comments), comments, web.cookies())
     except:
       print 'exception when getting post'
       print traceback.format_exc()
@@ -119,7 +141,14 @@ class Post:
     content = user_data.get('content', '')
     if post_id == -1:
       return render.error()
-    db.insert(T_COMMENT, id=0, date=web.SQLLiteral("NOW()"), homepage=website, email = email, articleid = post_id, content = content, author = author)
+    ip = ip2long(web.ctx['ip'])
+    useragent = web.ctx.env['HTTP_USER_AGENT']
+
+    db.insert(T_COMMENT, id=0, date=web.SQLLiteral("NOW()"), homepage=website, email = email, articleid = post_id, content = content, author = author, ipv4 = ip, useragent = useragent)
+    age = 30*24*60*60
+    web.setcookie('email',email,age)
+    web.setcookie('author',author,age)
+    web.setcookie('website','website',age)
     web.seeother('/post?id=' + user_data.get('post_id', ''))
 
 class Author:
