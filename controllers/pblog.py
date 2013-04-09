@@ -113,7 +113,6 @@ class Post:
       if post_id == 0:
         return render.error()
       post = db.select(T_ARTICLE,myVar, where="id=$id",limit = 1)
-      comments = db.select(T_COMMENT,myVar, where="articleid=$id");
       ne_post = db.select(T_ARTICLE, myVar, where="id > $id",limit = 1)
       pre_post = db.select(T_ARTICLE, myVar, where='id < $id', limit = 1, order='date DESC')
       if len(post) == 0:
@@ -126,31 +125,12 @@ class Post:
         ne_post_id = 0
       else:
         ne_post_id = ne_post[0].id
-      return render.post(post[0], pre_post_id, ne_post_id, len(comments), comments, web.cookies())
+      return render.post(post[0], pre_post_id, ne_post_id, web.cookies())
     except:
       print 'exception when getting post'
       print traceback.format_exc()
       return render.error()
     
-  def POST(self):
-    user_data = web.input()
-    author = user_data.get('author', '')
-    email = user_data.get('email', '')
-    website = user_data.get('website', '')
-    post_id = int(user_data.get('post_id', '-1'))
-    content = user_data.get('content', '')
-    if post_id == -1:
-      return render.error()
-    ip = ip2long(web.ctx['ip'])
-    useragent = web.ctx.env['HTTP_USER_AGENT']
-
-    db.insert(T_COMMENT, id=0, date=web.SQLLiteral("NOW()"), homepage=website, email = email, articleid = post_id, content = content, author = author, ipv4 = ip, useragent = useragent)
-    age = 30*24*60*60
-    web.setcookie('email',email,age)
-    web.setcookie('author',author,age)
-    web.setcookie('website','website',age)
-    web.seeother('/post?id=' + user_data.get('post_id', ''))
-
 class Author:
   def GET(self,uid):
 	try:

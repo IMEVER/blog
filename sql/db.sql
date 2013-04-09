@@ -31,6 +31,23 @@ create table comment
 	primary key(id)
 )engine=innodb,charset=utf8;
 
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` text NOT NULL,
+  `author` varchar(255) NOT NULL,
+  `email` varchar(512) NOT NULL,
+  `homepage` varchar(512) NOT NULL DEFAULT '',
+  `usrid` int(11) NOT NULL DEFAULT '0',
+  `articleid` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `upnum` int(11) DEFAULT '0',
+  `downnum` int(11) DEFAULT '0',
+  `ipv4` int(11) DEFAULT NULL,
+  `ipv6` binary(16) DEFAULT NULL,
+  `useragent` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8
+
 create table user
 (
 	id int not null auto_increment,

@@ -231,6 +231,12 @@ a:hover {
 .comment-action span{
   padding:2px 4px;
 }
+.comment-action span[data-dir=inc]{
+  color:green;
+}
+.comment-action span[data-dir=dec]{
+  color:red;
+}
 .comment-action span:hover{
   background-color: #333;
   font-size: 14px;
