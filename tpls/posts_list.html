@@ -5,7 +5,7 @@ $if len(posts) == 0:
 	</div>
 $for i in posts:
   <div class="post">
-    <h2 class="title"><a href="/post?id=$i['id']">$i['title']</a></h2>
+    <h2 class="title"><a href="/article?id=$i['id']">$i['title']</a></h2>
     <p class="byline">
       <span class="author"><a href="/author/$i['usrid']">$i['author']</a></span><small> 发表于 <span class="date"> $i['date']</span></small>
       $ tags = i['tags'].split(';')
@@ -19,7 +19,7 @@ $for i in posts:
     </div>
     <div class="meta">
       <p class="links">
-        <a href="/post?id=$i['id']#comments" class="comments">comments($i['c_count'])</a>
+        <a href="/article?id=$i['id']#comments" class="comments">comments($i['c_count'])</a>
       </p>
     </div>
   </div>

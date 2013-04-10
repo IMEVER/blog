@@ -169,13 +169,15 @@ a:hover {
 	padding-left:10px;
 }
 
+.recommendList a{line-height:20px;}
+
 /** FOOTER */
 
 #footer {
 	clear: both;
 	width: 980px;
 	margin: 0px auto;
-	border: 1px solid #000099;
+	border: 1px solid #cccccc;
 }
 
 #footer p {
@@ -183,6 +185,7 @@ a:hover {
 	padding: 0px;
 	font-size: x-small;
 	padding: 5px 10px;
+	text-align:center;
 }
 #comment-form{
   padding-bottom:0.5em;
@@ -219,8 +222,12 @@ a:hover {
 }
 .comment-time{
   font-size:10px;
+  font-style:italic;
   color:#999;
   margin-top:-0.5em;
+}
+.comment-hilight{
+  background-color:#ffffcc;
 }
 .comment-action{
   text-align:right;

@@ -3,15 +3,9 @@
 
 import web
 import sys
-import md5
-import random
 import traceback
-import urllib, hashlib
-import socket
-import struct
+from lib import utils
 from config import settings
-
-
 
 T_ARTICLE = 'article'
 T_COMMENT = 'comment'
@@ -23,35 +17,6 @@ render = settings.render
 db = settings.db
 reload(sys)
 sys.setdefaultencoding("utf-8")
-
-def recommendList():
-	query= db.select(T_ARTICLE,limit=10,where="comment>0",order="comment desc")
-	posts = []
-	for item in query:
-		article={}
-		article['id'] = item.id
-		article['title'] = item.title
-		posts.append(article)
-	return posts
-#print recommendList()
-
-def getAvatarUrl(email):
-	default = "http://www.imever.cn:8080/static/images/gravatar.png"
-	size = 40
-	
-	gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower()).hexdigest() + "?"
-	#gravatar_url += urllib.urlencode({'d':default,'s':str(size)})
-
-	gravatar_url += urllib.urlencode({'d':'mm', 's':str(size)})
-	return gravatar_url
-
-web.template.Template.globals['rList'] = recommendList()
-web.template.Template.globals['getAvatarUrl'] = getAvatarUrl
-
-def ip2long(ip):
-	return struct.unpack("!I",socket.inet_aton(ip))[0]
-def long2ip(ip):
-	return socket.inet_ntoa(struct.pack("!I",ip))
 
 #def article
 
@@ -104,53 +69,7 @@ class Index:
     except:
       print traceback.format_exc()
       return render.error()
-
-class Post:
-  def GET(self):
-    try:
-      post_id = int(web.input(id = '0').id)
-      myVar = dict(id=post_id)
-      if post_id == 0:
-        return render.error()
-      post = db.select(T_ARTICLE,myVar, where="id=$id",limit = 1)
-      ne_post = db.select(T_ARTICLE, myVar, where="id > $id",limit = 1)
-      pre_post = db.select(T_ARTICLE, myVar, where='id < $id', limit = 1, order='date DESC')
-      if len(post) == 0:
-        return render.error()
-      if len(pre_post) == 0:
-        pre_post_id = 0
-      else:
-        pre_post_id = pre_post[0].id
-      if len(ne_post)==0:
-        ne_post_id = 0
-      else:
-        ne_post_id = ne_post[0].id
-      return render.post(post[0], pre_post_id, ne_post_id, web.cookies())
-    except:
-      print 'exception when getting post'
-      print traceback.format_exc()
-      return render.error()
-    
-class Author:
-  def GET(self,uid):
-	try:
-	  uid = int(uid)
-	  myVar = dict(id=uid)
-	  user = db.select(T_USER,myVar,where='id=$id',limit='1')
-	  if len(user):
-	    user = user[0]
-	    posts = db.select(T_ARTICLE,myVar,where='usrid=$id',order='date DESC')
-	  else:
-	    user = {}
-	    posts = {}
-	  return render.author(user,posts)
-    	except:
-      	  print traceback.format_exc()
-	  return render.error()  
-class About:
-  def GET(self):
-    return render.about()
-    
+ 
 class Tag:
   def GET(self):
     try:

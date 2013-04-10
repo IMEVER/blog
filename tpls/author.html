@@ -1,22 +1,24 @@
 $def with(user,posts)
+<link href="$config.static/styles/author.css" rel="stylesheet" type="text/css" />
+<div class="userpage">
 $if len(user) > 0:
   <p>User name: <b>$user.user</b></p>
   <p>Adder : <span>$user.addr</span></p>
   <p>Birth : <span>$user.birth</span></p>
   <p>Desc: </p><blockquote>$user.desc</blockquote>
   <p>
-     Article Count : <span>$len(posts)</span><br />
-     Article Lists :
-	<ul>
+     <p>Article Count : <span class="count">$len(posts)</span></p>
+     <p>Article Lists :</p>
+	<ul class="articlelist">
 		$for post in posts:
 			<li><a href="/post?id=$post.id">$post.title</a> 
 			$if post.tag:  
 				Tag:<a href="/tag?key=$post.tag">$post.tag</a> 
-				$post.date.date()</li>
+				<cite>$post.date.date()</cite></li>
 	</ul>
   </p>
 
 
 $else:
   <p>User with id equal 1 does not exist</p>
-
+</div>

@@ -15,9 +15,9 @@ $def with(post, pre_id, ne_id, cookies)
 $if pre_id != 0 or ne_id != 0:
   <div id="post-nav">
     $if pre_id!=0:
-      <a class="post-nav-pre" href="/post?id=$pre_id">&lt;&lt;&nbsp;PrePost</a>
+      <a class="post-nav-pre" href="/article?id=$pre_id">&lt;&lt;&nbsp;PrePost</a>
     $if ne_id != 0:
-      <a class="post-nav-ne" href="/post?id=$ne_id">NextPost&nbsp;&gt;&gt;</a>
+      <a class="post-nav-ne" href="/article?id=$ne_id">NextPost&nbsp;&gt;&gt;</a>
   </div>
 <!-- 评论部分 -->
 <div id="comments">
@@ -30,19 +30,19 @@ $if pre_id != 0 or ne_id != 0:
     <table>
       <tr>
         <td><label for="name-input">Name:</label></td>
-        <td><input type="text" id="name-input" name="author" value="$cookies.author" />
+        <td><input type="text" id="name-input" name="author" value="$cookies.author" placeholder="your name" />
           <span id="name-error" class="error-msg unshown">请填写用户名</span>
         </td>
       </tr>
       <tr>
         <td><label for="email-input">Email:</label></td>
-        <td><input type="text" id="email-input" name="email" value="$cookies.email" />
+        <td><input type="text" id="email-input" name="email" value="$cookies.email" placeholder="your email" />
           <span id="email-error" class="error-msg unshown">请填写email</span>
         </td>
       </tr>
       <tr>
         <td><label for="website-input">Website:</label></td>
-        <td><input type="text" id="website-input" name="website" value="$cookies.website" /></td>
+        <td><input type="text" id="website-input" name="website" value="$cookies.website" placeholder="your website's or blog's address" /></td>
       </tr>
       <tr>
         <td><label for="comment-input">Comment:</label></td>

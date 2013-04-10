@@ -1,6 +1,6 @@
 $(document).ready(function(){  
   function cli(item){
-    var tpl = '<li><div class="comment-box clearfix" id="comment_'+item.id+'"><div class="comment-avatar"><img src="'+item.head+'"></div><div class="comment-info"><p class="comment-user">'+item.author+'</p><p class="comment-time">'+item.date+'</p><div><p class="comment-content">'+item.content+'</p></div><div class="comment-action"><span data-id="'+item.id+'" data-dir="inc">UP('+item.upnum+')</span> | <span data-id="'+item.id+'" data-dir="dec">DOWN('+item.downnum+')</span></div></div></div></li>';
+    var tpl = '<li><div class="comment-box clearfix" id="comment_'+item.id+'"><div class="comment-avatar"><img src="'+item.head+'"></div><div class="comment-info"><p class="comment-user">'+item.author+'</p><p class="comment-time">'+item.date+'</p><div'+(item.upnum>5 ? ' class="comment-hilight"':'')+'><p class="comment-content">'+item.content+'</p></div><div class="comment-action"><span data-id="'+item.id+'" data-dir="inc">UP('+item.upnum+')</span> | <span data-id="'+item.id+'" data-dir="dec">DOWN('+item.downnum+')</span></div></div></div></li>';
     return tpl;
   }
   $("#comment-submit").click(function(){
@@ -31,7 +31,7 @@ $(document).ready(function(){
       html += cli(data.data[i])
     }
     html += '</ol>';
-    setTimeout(function(){document.getElementById("comments-list").innerHTML = html},5000) ;
+    setTimeout(function(){document.getElementById("comments-list").innerHTML = html},100) ;
   })
 });
 
@@ -82,11 +82,5 @@ function validateComment(){
 				console.log("Success:"+data.msg);		
 			}
 		});
-	});
-	$(".comment-action span[data-dir=inc]").each(function(i,item){
-		var num = parseInt(item.innerHTML.match(/\((\d+)\)/)[1]);
-		if(num > 5){
-			$(item).parent().prev().get(0).style.backgroundColor = "#ffffcc";
-		}
 	});
 })(window,undefined)

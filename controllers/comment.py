@@ -3,15 +3,11 @@
 
 import web
 import sys
-import md5
-import random
 import traceback
 from config import settings
 import json
 import datetime
-import socket
-import struct
-import urllib, hashlib
+import lib.utils as utils
 
 T_ARTICLE = 'article'
 T_COMMENT = 'comment'
@@ -24,26 +20,6 @@ render = settings.render
 db = settings.db
 reload(sys)
 sys.setdefaultencoding("utf-8")
-
-def ip2long(ip):
-	return struct.unpack("!I",socket.inet_aton(ip))[0]
-
-class ExtendedEncoder(json.JSONEncoder):
-  def default(self, o):
-    if isinstance(o,datetime.datetime):
-      return o.strftime("%Y-%m-%d %H:%M:%S")
-    return json.JSONEncoder(self, o)
-
-def getAvatarUrl(email):
-        default = "http://www.imever.cn:8080/static/images/gravatar.png"
-        size = 40
-        
-        gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower()).hexdigest() + "?"
-        #gravatar_url += urllib.urlencode({'d':default,'s':str(size)})
-
-        gravatar_url += urllib.urlencode({'d':'mm', 's':str(size)})
-        return gravatar_url
-
 
 #def article
 
@@ -78,7 +54,7 @@ class Vote:
     if cid == -1 or dir == False or (dir != 'inc' and dir != 'dec'):
       return json.dumps({'status':-1,'msg':'params error'})
 
-    ip = ip2long(web.ctx['ip'])
+    ip = utils.ip2long(web.ctx['ip'])
     useragent = web.ctx.env['HTTP_USER_AGENT']
     author = web.cookies().author
     email = web.cookies().email
@@ -101,8 +77,8 @@ class Comment:
     myVar = dict(id=post_id)
     comments = db.select(T_COMMENT,myVar, where="articleid=$id").list();
     for comment in comments:
-      comment.head = getAvatarUrl(comment.email)
-    return json.dumps({'status':1, 'data':comments}, cls=ExtendedEncoder)
+      comment.head = utils.getAvatarUrl(comment.email)
+    return json.dumps({'status':1, 'data':comments}, cls=utils.ExtendedEncoder)
 
   def POST(self):
     user_data = web.input()
@@ -115,7 +91,7 @@ class Comment:
     web.header('Content-Type', 'application/json')
     if post_id == -1:
       return json.dumps({'status':0, 'msg':'params error'})
-    ip = ip2long(web.ctx['ip'])
+    ip = utils.ip2long(web.ctx['ip'])
     useragent = web.ctx.env['HTTP_USER_AGENT']
 
     insert_id = db.insert(T_COMMENT, id=0, date=web.SQLLiteral("NOW()"), homepage=website, email = email, articleid = post_id, content = content, author = author, ipv4 = ip, useragent = useragent)

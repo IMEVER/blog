@@ -35,16 +35,15 @@ $def with(content)
       </div>
 	    <div id="right">
 		    <h2>ARCHIVES</h2>
-		    	<ul>
-			$for item in rList:
-			    <li><a href="post?id=$item['id']">$item['title']</a>
+		    	<ul class="recommendList">
+                            <li>Recommend article loading...</li>
         		</ul>
-       		 <h2>Administration</h2>
-
+       		 <h2 hidden>Administration</h2>
 	</div>
     </div>
     <div id="footer">
 	    <p>Copyright &copy; 2012 Designed by <a href="http://blog.imever.me/" class="link1">IMEVER</a></p>
     </div>
+    <script src="$config.static/scripts/common.js"></script>
   </body>
 </html>
