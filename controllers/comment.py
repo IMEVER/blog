@@ -11,6 +11,7 @@ import json
 import datetime
 import socket
 import struct
+import urllib, hashlib
 
 T_ARTICLE = 'article'
 T_COMMENT = 'comment'
@@ -32,6 +33,17 @@ class ExtendedEncoder(json.JSONEncoder):
     if isinstance(o,datetime.datetime):
       return o.strftime("%Y-%m-%d %H:%M:%S")
     return json.JSONEncoder(self, o)
+
+def getAvatarUrl(email):
+        default = "http://www.imever.cn:8080/static/images/gravatar.png"
+        size = 40
+        
+        gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower()).hexdigest() + "?"
+        #gravatar_url += urllib.urlencode({'d':default,'s':str(size)})
+
+        gravatar_url += urllib.urlencode({'d':'mm', 's':str(size)})
+        return gravatar_url
+
 
 #def article
 
@@ -88,6 +100,8 @@ class Comment:
       return json.dumps({'status':0, 'msg':'Param error'})
     myVar = dict(id=post_id)
     comments = db.select(T_COMMENT,myVar, where="articleid=$id").list();
+    for comment in comments:
+      comment.head = getAvatarUrl(comment.email)
     return json.dumps({'status':1, 'data':comments}, cls=ExtendedEncoder)
 
   def POST(self):
@@ -96,8 +110,8 @@ class Comment:
     email = user_data.get('email', '')
     website = user_data.get('website', '')
     post_id = int(user_data.get('post_id', '-1'))
-    content = user_data.get('content', '')
-    
+    content = user_data.get('content', '')    
+
     web.header('Content-Type', 'application/json')
     if post_id == -1:
       return json.dumps({'status':0, 'msg':'params error'})

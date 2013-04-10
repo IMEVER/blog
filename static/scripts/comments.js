@@ -1,6 +1,6 @@
 $(document).ready(function(){  
   function cli(item){
-    var tpl = '<li><div class="comment-box clearfix" id="comment_'+item.id+'"><div class="comment-avatar"><img src="http://www.gravatar.com/avatar/59df67f5fdb944bc0013312764d71ff9?s=40&amp;d=mm"></div><div class="comment-info"><p class="comment-user">'+item.author+'</p><p class="comment-time">'+item.date+'</p><div><p class="comment-content">'+item.content+'</p></div><div class="comment-action"><span data-id="'+item.id+'" data-dir="inc">UP('+item.upnum+')</span> | <span data-id="'+item.id+'" data-dir="dec">DOWN('+item.downnum+')</span></div></div></div></li>';
+    var tpl = '<li><div class="comment-box clearfix" id="comment_'+item.id+'"><div class="comment-avatar"><img src="'+item.head+'"></div><div class="comment-info"><p class="comment-user">'+item.author+'</p><p class="comment-time">'+item.date+'</p><div><p class="comment-content">'+item.content+'</p></div><div class="comment-action"><span data-id="'+item.id+'" data-dir="inc">UP('+item.upnum+')</span> | <span data-id="'+item.id+'" data-dir="dec">DOWN('+item.downnum+')</span></div></div></div></li>';
     return tpl;
   }
   $("#comment-submit").click(function(){
