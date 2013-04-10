@@ -15,7 +15,7 @@ A small blog wrote by webpy for myself.
 * __static/styles/__       css dir
 * __tpls/__                template files dir
 * __tpls/admin-tpls/__     admin template files dir
-
+* __lib/__		   lib and utils files dir
 
 ## License
 
