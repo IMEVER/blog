@@ -79,12 +79,12 @@ a:hover {
 }
 
 #menu li {
-	display: inline;
+	display: inline-block;
 }
 
 #menu a {
 	display: block;
-	float: left;
+	/*float: left;*/
 	padding: 3px 10px;
 	border-right: 1px solid #000099;
 	text-decoration: none;

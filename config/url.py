@@ -10,6 +10,7 @@ comment_prefix = 'controllers.comment.'
 about_prefix = 'controllers.about.'
 article_prefix = 'controllers.article.'
 author_prefix = 'controllers.author.'
+links_prefix = 'controllers.links.'
 
 urls = (
   '/(.*)/', pre_fix + 'Redirect',
@@ -24,5 +25,6 @@ urls = (
   '/tag', pre_fix + 'Tag',
   '/about',about_prefix + 'About',
   '/author/(.*)', author_prefix + 'Author',
+  '/links', links_prefix + 'Links',
   '/admin',admin_app, 
 )
